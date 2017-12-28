@@ -23,7 +23,6 @@
   <script src="./js/algorithm/LRU.js"></script>
   <script src="./js/algorithm/LFU.js"></script>
   <script src="./js/algorithm/OPT.js"></script>
-  <script src="./js/index.js"></script>
 </head>
 
 <body>
@@ -34,9 +33,9 @@
       <div class="col">
         <label for="pageList">页面访问序列</label>
         <div class="input-group">
-          <input type="text" class="form-control" id="pageList">
+          <input type="text" class="form-control" id="pageList" placeholder="1 2 3 4 5 6 4 3 2 1 6">
           <span class="input-group-btn">
-            <button class="btn btn-secondary" type="button">随机生成</button>
+            <button class="btn btn-secondary" type="button" id="randomPageList">随机生成</button>
           </span>
         </div>
       </div>
@@ -48,32 +47,32 @@
       <div class="col-2">
         <label for="memoryVolume">内存容量</label>
         <div class="input-group">
-          <input type="number" class="form-control" id="memoryVolume">
+          <input type="number" class="form-control" id="memoryVolume" placeholder="3">
           <span class="input-group-addon">页</span>
         </div>
         <label for="pageAmount">页面总数</label>
         <div class="input-group">
-          <input type="number" class="form-control" id="pageAmount">
+          <input type="number" class="form-control" id="pageAmount" placeholder="10">
           <span class="input-group-addon">页</span>
         </div>
         <label for="TLBAmount">快表容量</label>
         <div class="input-group">
-          <input type="number" class="form-control" id="TLBAmount">
+          <input type="number" class="form-control" id="TLBAmount" placeholder="2">
           <span class="input-group-addon">表项</span>
         </div>
         <label for="memoryTime">内存存取的时间</label>
         <div class="input-group">
-          <input type="number" class="form-control" id="memoryTime">
+          <input type="number" class="form-control" id="memoryTime" placeholder="500">
           <span class="input-group-addon">毫秒</span>
         </div>
         <label for="TLBTime">快表存取的时间</label>
         <div class="input-group">
-          <input type="number" class="form-control" id="TLBTime">
+          <input type="number" class="form-control" id="TLBTime" placeholder="500">
           <span class="input-group-addon">毫秒</span>
         </div>
         <label for="interruptTime">缺页中断时间</label>
         <div class="input-group">
-          <input type="number" class="form-control" id="interruptTime">
+          <input type="number" class="form-control" id="interruptTime" placeholder="500">
           <span class="input-group-addon">毫秒</span>
         </div>
         <div class="form-check form-check-inline">
@@ -83,7 +82,7 @@
         </div>
         <div class="form-check form-check-inline">
           <label class="form-check-label">
-            <input class="form-check-input" type="radio" name="hasTLB" id="notHasTLB" value="n"> 无快表
+            <input class="form-check-input" type="radio" name="hasTLB" id="notHasTLB" value="n" checked="checked"> 无快表
           </label>
         </div>
         <button type="button" class="btn btn-primary btn-lg btn-block" id="start">开始</button>
@@ -94,56 +93,49 @@
         <div class="row">
           <!-- FIFO -->
           <div class="col">
+            <blockquote class="blockquote text-center">
+              <p class="mb-0">FIFO</p>
+            </blockquote>
             <table class="table table-responsive table-bordered" id="FIFOTable">
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@TwBootstrap</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">4</th>
-                  <td colspan="2">Larry the Bird</td>
-                  <td>@twitter</td>
-                </tr>
               </tbody>
             </table>
           </div>
           <!-- LRU -->
           <div class="col">
+            <blockquote class="blockquote text-center">
+              <p class="mb-0">LRU</p>
+            </blockquote>
             <table class="table table-responsive table-bordered" id="LRUTable">
-              ...
+              <tbody>
+              </tbody>
             </table>
           </div>
           <!-- LFU -->
           <div class="col">
+            <blockquote class="blockquote text-center">
+              <p class="mb-0">LFU</p>
+            </blockquote>
             <table class="table table-responsive table-bordered" id="LFUTable">
-              ...
+              <tbody>
+              </tbody>
             </table>
           </div>
           <!-- OPT -->
           <div class="col">
+            <blockquote class="blockquote text-center">
+              <p class="mb-0">OPT</p>
+            </blockquote>
             <table class="table table-responsive table-bordered" id="OPTTable">
-              ...
+              <tbody>
+              </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <script src="./js/index.js"></script>
 </body>
 
 </html>

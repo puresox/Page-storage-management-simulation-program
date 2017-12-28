@@ -23,7 +23,7 @@ async function memoryPageDisplacement(
   time,
   memoryTime,
   interruptTime,
-  getOutPage,
+  getOutPage
 ) {
   // 访问页表
   await timeout(memoryTime);
@@ -32,7 +32,7 @@ async function memoryPageDisplacement(
   if (pageTable[page].status === 0) {
     // 该页不在内存 缺页中断
     await timeout(interruptTime);
-    if (memory.length === memoryVolume) {
+    if (memory.indexOf(-1) === -1) {
       // 内存已满
       /** 找最先进入的页面 */
       outPage = getOutPage(pageTable);
@@ -45,7 +45,7 @@ async function memoryPageDisplacement(
       pageTable,
       memory,
       time: time + memoryTime + interruptTime,
-      outPage,
+      outPage
     };
   }
   // 该页在内存
@@ -53,11 +53,19 @@ async function memoryPageDisplacement(
     pageTable,
     memory,
     time: time + memoryTime,
-    outPage,
+    outPage
   };
 }
 
-async function TLBPageDisplacement(TLB, TLBAmount, page, time, TLBTime, getOutPage, memoryOutPage) {
+async function TLBPageDisplacement(
+  TLB,
+  TLBAmount,
+  page,
+  time,
+  TLBTime,
+  getOutPage,
+  memoryOutPage
+) {
   // 去除被换出内存的页
   if (memoryOutPage !== -1 && TLB.indexOf(memoryOutPage) !== -1) {
     TLB[TLB.indexOf(memoryOutPage)] = { page: -1, visit: 0 };
@@ -65,7 +73,7 @@ async function TLBPageDisplacement(TLB, TLBAmount, page, time, TLBTime, getOutPa
   // 修改快表
   await timeout(TLBTime);
   let outPage = -1;
-  if (TLB.length === TLBAmount || TLB.indexOf({ page: -1, visit: 0 }) !== -1) {
+  if (TLB.indexOf({ page: -1, visit: 0 }) === -1) {
     // 快表已满
     /** 找最先进入的页面 */
     outPage = getOutPage(TLB);
@@ -74,12 +82,9 @@ async function TLBPageDisplacement(TLB, TLBAmount, page, time, TLBTime, getOutPa
     TLB[outPage].visit = 0;
   }
   // 将该页放入内存
-  if (outPage === -1) {
-    TLB[TLB.indexOf({ page: -1, visit: 0 })].page = page;
-  }
-  TLB[outPage].page = page;
+  TLB[TLB.indexOf({ page: -1, visit: 0 })].page = page;
   return {
     TLB,
-    time: time + TLBTime,
+    time: time + TLBTime
   };
 }
