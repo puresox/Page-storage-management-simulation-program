@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+    crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
+  <!-- echarts -->
+  <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.min.js"></script>
+  <!-- 页面置换算法 -->
+  <script src="./js/time.js"></script>
+  <script src="./js/addressMapping.js"></script>
+  <script src="./js/algorithm/FIFO.js"></script>
+  <script src="./js/algorithm/LRU.js"></script>
+  <script src="./js/algorithm/LFU.js"></script>
+  <script src="./js/algorithm/OPT.js"></script>
+  <script src="./js/index.js"></script>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <!-- 输入序列 -->
+    <br>
+    <div class="row">
+      <div class="col">
+        <label for="pageList">页面访问序列</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="pageList">
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" type="button">随机生成</button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- 内容部分 -->
+    <br>
+    <div class="row">
+      <!-- 设置部分 -->
+      <div class="col-2">
+        <label for="memoryVolume">内存容量</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="memoryVolume">
+          <span class="input-group-addon">页</span>
+        </div>
+        <label for="pageAmount">页面总数</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="pageAmount">
+          <span class="input-group-addon">页</span>
+        </div>
+        <label for="TLBAmount">快表容量</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="TLBAmount">
+          <span class="input-group-addon">表项</span>
+        </div>
+        <label for="memoryTime">内存存取的时间</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="memoryTime">
+          <span class="input-group-addon">毫秒</span>
+        </div>
+        <label for="TLBTime">快表存取的时间</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="TLBTime">
+          <span class="input-group-addon">毫秒</span>
+        </div>
+        <label for="interruptTime">缺页中断时间</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="interruptTime">
+          <span class="input-group-addon">毫秒</span>
+        </div>
+        <div class="form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="radio" name="hasTLB" id="hasTLB" value="y"> 有快表
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="radio" name="hasTLB" id="notHasTLB" value="n"> 无快表
+          </label>
+        </div>
+        <button type="button" class="btn btn-primary btn-lg btn-block" id="start">开始</button>
+      </div>
+      <!-- 页表显示部分 -->
+      <div class="col-10">
+        <br>
+        <div class="row">
+          <!-- FIFO -->
+          <div class="col">
+            <table class="table table-responsive table-bordered" id="FIFOTable">
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@TwBootstrap</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>@fat</td>
+                </tr>
+                <tr>
+                  <th scope="row">4</th>
+                  <td colspan="2">Larry the Bird</td>
+                  <td>@twitter</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- LRU -->
+          <div class="col">
+            <table class="table table-responsive table-bordered" id="LRUTable">
+              ...
+            </table>
+          </div>
+          <!-- LFU -->
+          <div class="col">
+            <table class="table table-responsive table-bordered" id="LFUTable">
+              ...
+            </table>
+          </div>
+          <!-- OPT -->
+          <div class="col">
+            <table class="table table-responsive table-bordered" id="OPTTable">
+              ...
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
