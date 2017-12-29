@@ -38,25 +38,21 @@ function getLostRate() {
     {
       name: "FIFO",
       type: "line",
-      stack: "%",
       data: []
     },
     {
       name: "LFU",
       type: "line",
-      stack: "%",
       data: []
     },
     {
       name: "LRU",
       type: "line",
-      stack: "%",
       data: []
     },
     {
       name: "OPT",
       type: "line",
-      stack: "%",
       data: []
     }
   ];

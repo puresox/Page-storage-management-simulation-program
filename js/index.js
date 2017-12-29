@@ -28,8 +28,10 @@ function getAppendString(page, memory, time) {
   memory.forEach(element => {
     if (element === page) {
       appendString += `<td style="color: red;">${element}</td>`;
+    } else if (element === -1) {
+      appendString += `<td style="opacity:0.0;">${element}</td>`;
     } else {
-      appendString += `<td>${element === -1 ? "" : element}</td>`;
+      appendString += `<td>${element}</td>`;
     }
   });
   appendString += `<th scope="row">${time}毫秒</th></tr>`;
@@ -56,11 +58,11 @@ $("#start").on("click", async function() {
   /** 快表容量 */
   const TLBAmount = parseInt($("#TLBAmount").val()) || 2;
   /** 内存存取的时间 */
-  const memoryTime = parseInt($("#memoryTime").val()) || 500;
+  const memoryTime = parseInt($("#memoryTime").val()) || 200;
   /** 快表存取的时间 */
-  const TLBTime = parseInt($("#TLBTime").val()) || 500;
+  const TLBTime = parseInt($("#TLBTime").val()) || 100;
   /** 缺页中断时间 */
-  const interruptTime = parseInt($("#interruptTime").val()) || 500;
+  const interruptTime = parseInt($("#interruptTime").val()) || 300;
   /** 是否有快表 */
   const hasTLB =
     ($("input:radio:checked").val() === "y" ? true : false) || false;

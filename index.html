@@ -41,7 +41,6 @@
       </div>
     </div>
     <!-- 内容部分 -->
-    <br>
     <div class="row">
       <!-- 设置部分 -->
       <div class="col-2">
@@ -62,17 +61,17 @@
         </div>
         <label for="memoryTime">内存存取的时间</label>
         <div class="input-group">
-          <input type="number" class="form-control" id="memoryTime" placeholder="500">
+          <input type="number" class="form-control" id="memoryTime" placeholder="200">
           <span class="input-group-addon">毫秒</span>
         </div>
         <label for="TLBTime">快表存取的时间</label>
         <div class="input-group">
-          <input type="number" class="form-control" id="TLBTime" placeholder="500">
+          <input type="number" class="form-control" id="TLBTime" placeholder="100">
           <span class="input-group-addon">毫秒</span>
         </div>
         <label for="interruptTime">缺页中断时间</label>
         <div class="input-group">
-          <input type="number" class="form-control" id="interruptTime" placeholder="500">
+          <input type="number" class="form-control" id="interruptTime" placeholder="300">
           <span class="input-group-addon">毫秒</span>
         </div>
         <div class="form-check form-check-inline">
@@ -85,9 +84,10 @@
             <input class="form-check-input" type="radio" name="hasTLB" id="notHasTLB" value="n" checked="checked"> 无快表
           </label>
         </div>
-        <button type="button" class="btn btn-primary btn-lg btn-block" id="start">开始</button>
-        <button type="button" class="btn btn-primary btn-lg btn-block" id="save">保存结果</button>
-        <button type="button" class="btn btn-success btn-lg btn-block" id="statistics">统计</button>
+        <button type="button" class="btn btn-primary btn-block" id="start">开始</button>
+        <button type="button" class="btn btn-primary btn-block" id="save">保存结果</button>
+        <button type="button" class="btn btn-success btn-block" id="statistics">统计</button>
+        <button type="button" class="btn btn-secondary btn-block" onclick="location.reload()">重置</button>
       </div>
       <!-- 页表显示部分 -->
       <div class="col-10">
