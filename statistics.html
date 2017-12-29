@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+    crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
+  <!-- echarts -->
+  <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.min.js"></script>
+  <!-- Dexie -->
+  <script src="https://cdn.bootcss.com/dexie/2.0.1/dexie.min.js"></script>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <br>
+    <!-- 数据可视化 -->
+    <div class="row">
+      <!-- 各算法时间最少次数饼状图 -->
+      <div class="col">
+        <div id="pie" style="width: 600px;height:400px;"></div>
+      </div>
+      <!-- 缺页率折线图 -->
+      <div class="col">
+        <div id="axis" style="width: 600px;height:400px;"></div>
+      </div>
+    </div>
+    <!-- 详细数据 -->
+    <br>
+    <div class="row">
+      <div class="col">
+        <blockquote class="blockquote text-center">
+          <p class="mb-0">详细数据记录</p>
+        </blockquote>
+        <table class="table table-responsive table-bordered" id="listTable">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">页面访问序列</th>
+              <th scope="col">内存容量</th>
+              <th scope="col">页面总数</th>
+              <th scope="col">快表容量</th>
+              <th scope="col">内存存取的时间/毫秒</th>
+              <th scope="col">快表存取的时间/毫秒</th>
+              <th scope="col">缺页中断时间/毫秒</th>
+              <th scope="col">有无快表</th>
+              <th scope="col">FIFO花费时间/毫秒</th>
+              <th scope="col">LFU花费时间/毫秒</th>
+              <th scope="col">LRU花费时间/毫秒</th>
+              <th scope="col">OPT花费时间/毫秒</th>
+              <th scope="col">FIFO缺页率</th>
+              <th scope="col">LFU缺页率</th>
+              <th scope="col">LRU缺页率</th>
+              <th scope="col">OPT缺页率</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="./js/statistics.js"></script>
+</body>
+
+</html>

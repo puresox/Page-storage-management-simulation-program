@@ -29,15 +29,19 @@ async function memoryPageDisplacement(
   time,
   memoryTime,
   interruptTime,
-  getOutPage
+  getOutPage,
+  lostPageTimes
 ) {
   // 访问页表
   await timeout(memoryTime);
+  time += memoryTime;
   let outPage = -1;
   // 判断页是否在内存
   if (pageTable[page].status === 0) {
     // 该页不在内存 缺页中断
+    lostPageTimes += 1;
     await timeout(interruptTime);
+    time += interruptTime;
     if (memory.indexOf(-1) === -1) {
       // 内存已满
       /** 找最先进入的页面 */
@@ -47,19 +51,14 @@ async function memoryPageDisplacement(
     }
     // 将该页放入内存
     memory[memory.indexOf(-1)] = page;
-    return {
-      pageTable,
-      memory,
-      time: time + memoryTime + interruptTime,
-      outPage
-    };
   }
   // 该页在内存
   return {
     pageTable,
     memory,
-    time: time + memoryTime,
-    outPage
+    time,
+    outPage,
+    lostPageTimes
   };
 }
 
@@ -72,14 +71,21 @@ async function TLBPageDisplacement(
   getOutPage,
   memoryOutPage
 ) {
+  let full = true;
   // 去除被换出内存的页
-  if (memoryOutPage !== -1 && TLB.indexOf(memoryOutPage) !== -1) {
-    TLB[TLB.indexOf(memoryOutPage)] = { page: -1, visit: 0 };
+  for (let index = 0; index < TLB.length; index++) {
+    if (TLB[index].page === memoryOutPage) {
+      TLB[index] = { page: -1, visit: 0 };
+    }
+    if (TLB[index].page === -1) {
+      full = false;
+    }
   }
   // 修改快表
   await timeout(TLBTime);
+  time += TLBTime;
   let outPage = -1;
-  if (TLB.indexOf({ page: -1, visit: 0 }) === -1) {
+  if (full) {
     // 快表已满
     /** 找最先进入的页面 */
     outPage = getOutPage(TLB);
@@ -88,10 +94,15 @@ async function TLBPageDisplacement(
     TLB[outPage].visit = 0;
   }
   // 将该页放入内存
-  TLB[TLB.indexOf({ page: -1, visit: 0 })].page = page;
+  for (let index = 0; index < TLB.length; index++) {
+    if (TLB[index].page === -1) {
+      TLB[index].page = page;
+      break;
+    }
+  }
   return {
     TLB,
-    time: time + TLBTime
+    time
   };
 }
 
@@ -146,19 +157,33 @@ async function LRU({
   interruptTime,
   memoryTime,
   TLBTime,
-  hasTLB
+  hasTLB,
+  lostPageTimes
 }) {
   let outPage = -1;
-  // 判断缺页
+  // 判断越界
   if (page > pageAmount) {
     throw new Error("越界中断");
   }
   if (hasTLB) {
     // 检索快表
     await timeout(TLBTime);
-    if (TLB.indexOf(page) === -1) {
+    time += TLBTime;
+    let isIn = false;
+    for (let index = 0; index < TLB.length; index++) {
+      if (TLB[index].page === page) {
+        isIn = true;
+      }
+    }
+    if (!isIn) {
       // 不在快表中
-      ({ pageTable, memory, time, outPage } = await memoryPageDisplacement(
+      ({
+        pageTable,
+        memory,
+        time,
+        outPage,
+        lostPageTimes
+      } = await memoryPageDisplacement(
         pageTable,
         memory,
         memoryVolume,
@@ -166,7 +191,8 @@ async function LRU({
         time,
         memoryTime,
         interruptTime,
-        MemoryGetOutPage
+        MemoryGetOutPage,
+        lostPageTimes
       ));
       // 修改快表
       ({ TLB, time } = await TLBPageDisplacement(
@@ -178,10 +204,18 @@ async function LRU({
         TLBGetOutPage,
         outPage
       ));
-      TLB[TLB.indexOf(page)].visit += 1;
+      TLB.forEach((TLBItem, index) => {
+        TLB[index].visit += 1;
+      });
     }
   } else {
-    ({ pageTable, memory, time, outPage } = await memoryPageDisplacement(
+    ({
+      pageTable,
+      memory,
+      time,
+      outPage,
+      lostPageTimes
+    } = await memoryPageDisplacement(
       pageTable,
       memory,
       memoryVolume,
@@ -189,7 +223,8 @@ async function LRU({
       time,
       memoryTime,
       interruptTime,
-      MemoryGetOutPage
+      MemoryGetOutPage,
+      lostPageTimes
     ));
   }
   // 修改页表
@@ -206,11 +241,13 @@ async function LRU({
   });
   // 访问实际物理地址
   await timeout(memoryTime);
+  time += memoryTime;
   return {
     pageTable,
     TLB,
     memory,
-    time
+    time,
+    lostPageTimes
   };
 }
 
@@ -227,7 +264,8 @@ onmessage = async function({
     interruptTime,
     memoryTime,
     TLBTime,
-    hasTLB
+    hasTLB,
+    lostPageTimes
   }
 }) {
   // 进行运算
@@ -244,10 +282,11 @@ onmessage = async function({
       interruptTime,
       memoryTime,
       TLBTime,
-      hasTLB
+      hasTLB,
+      lostPageTimes
     })
       .then(workerResult => {
-        ({ pageTable, TLB, memory, time } = workerResult);
+        ({ pageTable, TLB, memory, time, lostPageTimes } = workerResult);
         workerResult.page = page;
         postMessage({
           success: true,
@@ -257,7 +296,7 @@ onmessage = async function({
       .catch(err => {
         postMessage({
           success: false,
-          message: err.message
+          message: err
         });
       });
   }

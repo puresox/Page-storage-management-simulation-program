@@ -16,9 +16,9 @@
     crossorigin="anonymous"></script>
   <!-- echarts -->
   <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.min.js"></script>
+  <!-- Dexie -->
+  <script src="https://cdn.bootcss.com/dexie/2.0.1/dexie.min.js"></script>
   <!-- 页面置换算法 -->
-  <script src="./js/time.js"></script>
-  <script src="./js/addressMapping.js"></script>
   <script src="./js/algorithm/FIFO.js"></script>
   <script src="./js/algorithm/LRU.js"></script>
   <script src="./js/algorithm/LFU.js"></script>
@@ -47,7 +47,7 @@
       <div class="col-2">
         <label for="memoryVolume">内存容量</label>
         <div class="input-group">
-          <input type="number" class="form-control" id="memoryVolume" placeholder="3">
+          <input type="number" class="form-control" id="memoryVolume" placeholder="4">
           <span class="input-group-addon">页</span>
         </div>
         <label for="pageAmount">页面总数</label>
@@ -57,7 +57,7 @@
         </div>
         <label for="TLBAmount">快表容量</label>
         <div class="input-group">
-          <input type="number" class="form-control" id="TLBAmount" placeholder="2">
+          <input type="number" class="form-control" id="TLBAmount" placeholder="4">
           <span class="input-group-addon">表项</span>
         </div>
         <label for="memoryTime">内存存取的时间</label>
@@ -86,6 +86,8 @@
           </label>
         </div>
         <button type="button" class="btn btn-primary btn-lg btn-block" id="start">开始</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block" id="save">保存结果</button>
+        <button type="button" class="btn btn-success btn-lg btn-block" id="statistics">统计</button>
       </div>
       <!-- 页表显示部分 -->
       <div class="col-10">
