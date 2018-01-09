@@ -4,5 +4,7 @@
 
 ## Usage
 
-请勿直接打开，需在 server 中运行
-**请使用最新 chrome 浏览器打开**
+1. 安装最新 LTS 的 nodejs 环境
+1. 安装最新的 chrome 浏览器
+1. `npm install http-server -g`
+1. `http-server [path]` (path 为项目文件夹路径)
